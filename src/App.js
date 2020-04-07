@@ -1,26 +1,22 @@
 import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import useFetch from './components/useFetch';
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+const api = 'https://opentdb.com/api.php?amount=10&category=27&difficulty=easy&type=multiple';
+
+function App(){
+  const [data, isLoading ] =  useFetch(api);
+
+  if(isLoading){
+    return <h1>Is Loading</h1>
+  }else{
+    return (
+      <div className="App">
+        <header className="App-header">
+          <h1>Quiz App</h1>
+        </header>
+      </div>
+    );
+  }
 }
 
 export default App;
