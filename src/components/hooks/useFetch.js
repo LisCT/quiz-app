@@ -16,16 +16,24 @@ const convertResponse = (response) => {
 }
 
 const useFetch = (api) => {
-  const [ data, setData ] = useState('');
+  const [ data, setData ] = useState(null);
   const [ isLoading, setIsloading ] = useState(true)
   
-   useEffect(() => {
+  useEffect(() => {
+    let timeout = null;
+    
     (async function gettingData(){
       try{
         const response = await fetch(api);
         const { results } = await response.json();
         setData(convertResponse(results));
-        setIsloading(false);
+
+        // Delay for loaders to desappear
+        timeout = setTimeout(() => { 
+          setIsloading(false); 
+          clearTimeout(timeout);
+        }, 800);
+
       }
       catch(error){
         console.log(`Something went wrong during the fetch: ${error}`);
