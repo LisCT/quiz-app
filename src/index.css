@@ -30,5 +30,12 @@ code {
 
 /* Quesitons */
 
-.answer-correct { color: green }
-.answer-incorrect { color: red }
+.correct { color: green }
+.incorrect { color: red }
+
+/* Progress Bar */
+
+.progress-bar{
+  height: 50px;
+  background: #3498db;
+}

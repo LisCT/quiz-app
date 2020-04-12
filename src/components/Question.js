@@ -1,28 +1,23 @@
-import React from 'react';
+import React, { useState } from 'react';
 
 const Question = ({ questions, currentQuestion, handleNextQuestion }) => {
 
   const { question, options, answer } = questions[currentQuestion];
+  const [ answering, setAnswering ] = useState(false);
 
-  const checkQuestion = (event, index) => {
-     const target = event.target;
+  const checkQuestion = ( event, index ) => {
 
-    if(index === answer){
-      target.classList.add('answer-correct');
-    }else {
-      target.classList.add('answer-incorrect');
-    }
+    if(answering) return;
+    setAnswering(true);
+
+    const targetClass = event.target.classList;
+    const selectedOption = (index === answer) ? `correct` : 'incorrect';
+    targetClass.add(selectedOption);
 
     let timeout = setTimeout(() => {
-      handleNextQuestion();
-
-      // remove classes
-      if(index === answer) {
-        target.classList.remove('answer-correct');
-      } else{ 
-        target.classList.remove('answer-incorrect');
-      }
-
+      handleNextQuestion(selectedOption);
+      targetClass.remove(selectedOption);
+      setAnswering(false);
       return clearTimeout(timeout);
     }, 1200);
   }
