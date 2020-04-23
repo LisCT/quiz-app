@@ -6,7 +6,7 @@ const Question = ({ questions, currentQuestion, handleNextQuestion }) => {
   const [ answering, setAnswering ] = useState(false);
 
   const checkQuestion = ( event, index ) => {
-
+    
     if(answering) return;
     setAnswering(true);
 
