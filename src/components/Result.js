@@ -1,8 +1,10 @@
 import React, { useState } from 'react';
+import { useFirebase } from './firebase/FirebaseContext';
 
-const Result = ({ score }) => {
+const Result = ({ score, scoreSaved }) => {
 
   const [ userName, setUserName ] = useState('');
+  const firebase = useFirebase();
 
   const handleChange =(e) => {
     setUserName(e.target.value)
@@ -15,7 +17,11 @@ const Result = ({ score }) => {
       name: userName,
       score
     }
-    console.log(record);
+
+    // saving data into firebase db
+    firebase.scores().push(record, () => {
+      scoreSaved(); //redirect on complete.
+    });
   }
 
   return(

@@ -1,4 +1,5 @@
 import React, { useState, Fragment } from 'react';
+import { useHistory } from 'react-router-dom';
 import useFetch from '../components/hooks/useFetch';
 import Loader from '../components/Loader'
 import Question from '../components/Question';
@@ -13,10 +14,15 @@ function Quiz(){
   const [score, setScore] = useState(0);
   const completedQuiz = !isLoading && currentQuestion === data.length;
   const incompletedQuiz = !isLoading && currentQuestion !== data.length;
-  
+  const history = useHistory();
+
   const handleNextQuestion = (selectedOption) => {
     setCurrentQuestion(prevState => prevState + 1);
     selectedOption === 'correct' && setScore(prevState => prevState + 10);
+  }
+  
+  const scoreSaved = () => {
+    history.push('/');
   }
 
   return(
@@ -36,7 +42,7 @@ function Quiz(){
           />
         </div>
       }
-      {completedQuiz && <Result score={score}/>}
+      {completedQuiz && <Result score={score} scoreSaved={scoreSaved}/>}
     </Fragment>
   )
 

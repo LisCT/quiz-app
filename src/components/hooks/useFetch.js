@@ -31,7 +31,6 @@ const useFetch = (api) => {
         // Delay for loaders to desappear
         timeout = setTimeout(() => { 
           setIsloading(false); 
-          clearTimeout(timeout);
         }, 800);
 
       }
@@ -39,9 +38,8 @@ const useFetch = (api) => {
         console.log(`Something went wrong during the fetch: ${error}`);
       }
     })(); 
-
+    return () => { clearTimeout(timeout) }
   }, [api]);
-
   return [data, isLoading];
 }
 
