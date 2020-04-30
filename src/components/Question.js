@@ -15,11 +15,12 @@ const Question = ({ questions, currentQuestion, handleNextQuestion }) => {
     targetClass.add(selectedOption);
 
     let timeout = setTimeout(() => {
-      handleNextQuestion(selectedOption);
-      targetClass.remove(selectedOption);
       setAnswering(false);
+      targetClass.remove(selectedOption);
+      handleNextQuestion(selectedOption);
       return clearTimeout(timeout);
     }, 1200);
+    
   }
 
   return (

@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useFirebase } from '../components/firebase/FirebaseContext';
+import Loader from '../components/Loader';
 
  const HighScores = () => {
   const firebase = useFirebase();
@@ -13,7 +14,7 @@ import { useFirebase } from '../components/firebase/FirebaseContext';
       setScores(sortedScores);
       setisLoading(false);
     })
-  });
+  },[firebase]);
 
   const formatScoreData = (firebaseScores) => {
     const scores = [];
@@ -28,16 +29,19 @@ import { useFirebase } from '../components/firebase/FirebaseContext';
       .slice(0,10);
 
   }
+
   return(
     <div>
-      <h1>Hight Scores</h1>
-      <div id="higscoreList">
-        <ul>
-          {scores.map((record) => ( 
-            <li key={record.key}>{`${record.name} - ${record.score}`}</li>
-          ))}
-        </ul>
-      </div>
+      {isLoading ? <Loader/> : (
+        <div id="higscoreList">
+          <h1>Hight Scores</h1>
+          <ul>
+            {scores.map((record) => ( 
+              <li key={record.key}>{`${record.name} - ${record.score}`}</li>
+            ))}
+          </ul>
+        </div>
+      )}
     </div>
   )
 };
